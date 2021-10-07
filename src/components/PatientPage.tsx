@@ -5,6 +5,7 @@ import { apiBaseUrl } from "../constants";
 import { Patient } from "../types";
 import { useStateValue } from "../state";
 import { updatePatient } from "../state";
+import EntryDetails from "./EntryDetails";
 
 const PatientPage = () => {
   const {id} = useParams<{id: string}>();
@@ -38,18 +39,7 @@ const PatientPage = () => {
             <b>{patients[id].entries?.length > 0 && "entries"}</b>
             {
               patients[id].entries?.map(entry => (
-                <div key={entry.id}>
-                  <div>{entry.date}</div>
-                  <i>{entry.description}</i><br/>
-                  {entry.diagnosisCodes &&
-                    <div>codes:<ul>
-                    {entry.diagnosisCodes?.map(code =>
-                      <li key={code}>
-                        <div>{code} {Object.values(diagnoses).find(d => d.code === code)?.name}</div>
-                      </li>)}
-                    </ul></div>}
-                  <br/>
-                </div>
+                <EntryDetails key={entry.id} entry={entry} diagnoses={diagnoses}/>
               ))
             }
         </>
