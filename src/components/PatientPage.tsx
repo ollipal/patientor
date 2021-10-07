@@ -4,6 +4,7 @@ import axios from "axios";
 import { apiBaseUrl } from "../constants";
 import { Patient } from "../types";
 import { useStateValue } from "../state";
+import { updatePatient } from "../state";
 
 const PatientPage = () => {
     const {id} = useParams<{id: string}>();
@@ -15,7 +16,7 @@ const PatientPage = () => {
             const { data: patientData } = await axios.get<Patient>(
               `${apiBaseUrl}/patients/${id}`
             );
-            dispatch({ type: "UPDATE_PATIENT", payload: patientData });
+            dispatch(updatePatient(patientData));
           } catch (e) {
             console.error(e);
           }
