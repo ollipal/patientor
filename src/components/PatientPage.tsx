@@ -8,7 +8,7 @@ import { updatePatient } from "../state";
 
 const PatientPage = () => {
   const {id} = useParams<{id: string}>();
-  const [{ patients }, dispatch] = useStateValue();
+  const [{ patients, diagnoses }, dispatch] = useStateValue();
 
   useEffect(() => {    
     const fetchPatientList = async () => {
@@ -41,7 +41,13 @@ const PatientPage = () => {
                 <div key={entry.id}>
                   <div>{entry.date}</div>
                   <i>{entry.description}</i><br/>
-                  {entry.diagnosisCodes && <div>codes: {entry.diagnosisCodes?.join(", ")}</div>}
+                  {entry.diagnosisCodes &&
+                    <div>codes:<ul>
+                    {entry.diagnosisCodes?.map(code =>
+                      <li key={code}>
+                        <div>{code} {Object.values(diagnoses).find(d => d.code === code)?.name}</div>
+                      </li>)}
+                    </ul></div>}
                   <br/>
                 </div>
               ))
