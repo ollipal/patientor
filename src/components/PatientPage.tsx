@@ -22,9 +22,7 @@ const PatientPage = () => {
         console.error(e);
       }
     };
-    if (!patients[id]?.ssn) { // only call if required
-      void fetchPatientList();
-    }
+    void fetchPatientList();
   }, []);
 
   return (
